@@ -14,7 +14,7 @@ function NavBar() {
   const currentPath = usePathname();
 
   return (
-    <nav className="flex space-x-10 p-5 mb-5 border-b items-center bg-slate-700">
+    <nav className="flex space-x-10 p-5 mb-5 border-b items-center bg-teal-900">
       <Link href="/">
         <BsBugFill size={30} />
       </Link>
