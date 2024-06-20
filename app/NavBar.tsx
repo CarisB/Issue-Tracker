@@ -1,5 +1,8 @@
+"use client";
+
+import classNames from "classnames";
 import Link from "next/link";
-import React from "react";
+import { usePathname } from "next/navigation";
 import { BsBugFill } from "react-icons/bs";
 
 function NavBar() {
@@ -7,6 +10,8 @@ function NavBar() {
     { href: "/", label: "Dashboard" },
     { href: "/issues", label: "Issues" },
   ];
+
+  const currentPath = usePathname();
 
   return (
     <nav className="flex space-x-10 p-5 mb-5 border-b items-center bg-slate-700">
@@ -18,7 +23,10 @@ function NavBar() {
           <li key={href}>
             <Link
               href={href}
-              className="hover:text-emerald-200 transition-colors"
+              className={classNames({
+                "font-bold": currentPath === href,
+                "hover:text-emerald-200 transition-colors": true,
+              })}
             >
               {label}
             </Link>
