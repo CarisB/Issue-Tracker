@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "./NavBar";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Theme>
-          <NavBar />
-          <main>{children}</main>
-        </Theme>
+        <ThemeProvider attribute="class">
+          <Theme>
+            <NavBar />
+            <main>{children}</main>
+          </Theme>
+        </ThemeProvider>
       </body>
     </html>
   );
