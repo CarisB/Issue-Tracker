@@ -4,6 +4,7 @@ import prisma from "@/prisma/db";
 import { Component1Icon } from "@radix-ui/react-icons";
 import { Button, Table } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
+import IssueStatusBadge from "../components/IssueStatusBadge";
 
 async function IssuesPage() {
   const router = useRouter();
@@ -25,7 +26,9 @@ async function IssuesPage() {
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>{issue.title}</Table.Cell>
-              <Table.Cell>{issue.status}</Table.Cell>
+              <Table.Cell>
+                <IssueStatusBadge status={issue.status} />
+              </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
                 {issue.createdAt.toLocaleString()}
               </Table.Cell>
