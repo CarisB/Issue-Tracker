@@ -1,14 +1,21 @@
+"use client";
+
 import { Component1Icon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
-import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
 
 function IssuesPage() {
+  const router = useRouter();
+
   return (
     <div>
-      <Button variant="soft">
+      <Button
+        variant="soft"
+        className="cursor-pointer"
+        onClick={() => router.push("/issues/new/")}
+      >
         <Component1Icon />
-        <Link href="/issues/new">Create Issue</Link>
+        Create Issue
       </Button>
     </div>
   );
