@@ -1,13 +1,10 @@
-"use client";
-
 import prisma from "@/prisma/db";
 import { Component1Icon } from "@radix-ui/react-icons";
 import { Button, Table } from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import IssueStatusBadge from "../components/IssueStatusBadge";
 
 async function IssuesPage() {
-  const router = useRouter();
   const issues = await prisma.issue.findMany();
 
   return (
@@ -36,14 +33,12 @@ async function IssuesPage() {
           ))}
         </Table.Body>
       </Table.Root>
-      <Button
-        variant="soft"
-        className="cursor-pointer"
-        onClick={() => router.push("/issues/new/")}
-      >
-        <Component1Icon />
-        Create Issue
-      </Button>
+      <Link href="/issues/new">
+        <Button variant="soft" className="cursor-pointer">
+          <Component1Icon />
+          Create Issue
+        </Button>
+      </Link>
     </div>
   );
 }
