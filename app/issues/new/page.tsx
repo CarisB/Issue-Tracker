@@ -1,18 +1,18 @@
 "use client";
 
+import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
+import { createIssueSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Component1Icon } from "@radix-ui/react-icons";
-import { Button, Callout, Text, TextField } from "@radix-ui/themes";
+import { Button, Callout, TextField } from "@radix-ui/themes";
 import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MdDangerous } from "react-icons/md";
-import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "@/app/validationSchemas";
-import ErrorMessage from "@/app/components/ErrorMessage";
-import Spinner from "@/app/components/Spinner";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -28,6 +28,11 @@ function NewIssuePage() {
   });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
+
+  // Dynamic import because SimpleMDE can't use SSR
+  const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+    ssr: false,
+  });
 
   const onSubmit = handleSubmit(async (data: IssueForm) => {
     try {
@@ -74,7 +79,11 @@ function NewIssuePage() {
           name={"description"}
           control={control}
           render={({ field }) => (
-            <SimpleMDE placeholder="Description of the Issue" {...field} />
+            <SimpleMDE
+              placeholder="Description of the Issue"
+              {...field}
+              ref={null}
+            />
           )}
         />
         <Button
