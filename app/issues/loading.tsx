@@ -1,15 +1,15 @@
-import { Component1Icon } from "@radix-ui/react-icons";
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
+import { Table } from "@radix-ui/themes";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import IssuesToolbar from "./IssuesToolbar";
 
 const issues = [1, 2, 3, 4, 5];
 
 function LoadingIssuesPage() {
   return (
     <div>
-      <Table.Root variant="surface" className="mb-10">
+      <IssuesToolbar />
+      <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
@@ -35,12 +35,6 @@ function LoadingIssuesPage() {
           ))}
         </Table.Body>
       </Table.Root>
-      <Link href="/issues/new">
-        <Button variant="soft" className="cursor-pointer">
-          <Component1Icon />
-          Create Issue
-        </Button>
-      </Link>
     </div>
   );
 }

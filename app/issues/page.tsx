@@ -1,15 +1,15 @@
 import prisma from "@/prisma/db";
-import { Component1Icon } from "@radix-ui/react-icons";
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
+import { Table } from "@radix-ui/themes";
 import IssueStatusBadge from "../components/IssueStatusBadge";
+import IssuesToolbar from "./IssuesToolbar";
 
 async function IssuesPage() {
   const issues = await prisma.issue.findMany();
 
   return (
     <div>
-      <Table.Root variant="surface" className="mb-10">
+      <IssuesToolbar />
+      <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
@@ -33,12 +33,6 @@ async function IssuesPage() {
           ))}
         </Table.Body>
       </Table.Root>
-      <Link href="/issues/new">
-        <Button variant="soft" className="cursor-pointer">
-          <Component1Icon />
-          Create Issue
-        </Button>
-      </Link>
     </div>
   );
 }
