@@ -4,6 +4,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BsBugFill } from "react-icons/bs";
+import DarkModeSwitch from "./DarkModeSwitch";
 
 function NavBar() {
   const links = [
@@ -14,11 +15,11 @@ function NavBar() {
   const currentPath = usePathname();
 
   return (
-    <nav className="flex space-x-10 p-5 mb-5 items-center bg-teal-700">
+    <nav className="flex gap-10 p-5 items-center bg-teal-700 text-white">
       <Link href="/">
         <BsBugFill size={30} />
       </Link>
-      <ul className="flex space-x-6">
+      <ul className="flex space-x-6 p-5 bg-teal-600 rounded-xl">
         {links.map(({ href, label }) => (
           <li key={href}>
             <Link
@@ -33,6 +34,9 @@ function NavBar() {
           </li>
         ))}
       </ul>
+      <div className="ml-auto">
+        <DarkModeSwitch />
+      </div>
     </nav>
   );
 }
