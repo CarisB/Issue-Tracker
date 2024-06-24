@@ -15,11 +15,11 @@ function NavBar() {
   const currentPath = usePathname();
 
   return (
-    <nav className="flex gap-10 p-5 items-center bg-teal-700 text-white">
+    <nav className="flex gap-10 p-5 items-center bg-teal-950 text-white">
       <Link href="/">
         <BsBugFill size={30} />
       </Link>
-      <ul className="flex space-x-6 p-5 bg-teal-600 rounded-xl">
+      <ul className="flex space-x-6 p-5 bg-teal-900 rounded-xl">
         {links.map(({ href, label }) => (
           <li key={href}>
             <Link
