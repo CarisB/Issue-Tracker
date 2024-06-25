@@ -40,4 +40,6 @@ async function IssuesPage() {
   );
 }
 
+// This page must be dynamically rendered to disable cache
+export const dynamic = "force-dynamic";
 export default IssuesPage;

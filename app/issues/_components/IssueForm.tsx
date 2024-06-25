@@ -69,6 +69,7 @@ function IssueForm({ issue }: Props) {
       }
 
       router.push("/issues");
+      router.refresh();
     } catch (e: any) {
       setSubmitting(false);
       setError(e.message || "An unexpected error has occurred.");
