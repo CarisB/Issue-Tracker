@@ -2,7 +2,7 @@
 
 import ErrorMessage from "@/app/_components/ErrorMessage";
 import Spinner from "@/app/_components/Spinner";
-import { createIssueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";
 import { Component1Icon } from "@radix-ui/react-icons";
@@ -15,7 +15,7 @@ import { Controller, useForm } from "react-hook-form";
 import { MdDangerous } from "react-icons/md";
 import { z } from "zod";
 
-type IssueForm = z.infer<typeof createIssueSchema>;
+type IssueForm = z.infer<typeof issueSchema>;
 
 interface Props {
   issue?: Issue;
@@ -29,7 +29,7 @@ function IssueForm({ issue }: Props) {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<IssueForm>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
@@ -43,8 +43,18 @@ function IssueForm({ issue }: Props) {
     try {
       setSubmitting(true);
 
-      const res = await fetch("/api/issues", {
-        method: "POST",
+      let path, method;
+
+      if (issue) {
+        // If issue exists, update. Otherwise, create.
+        path = `/api/issues/${issue.id}`;
+        method = "PATCH";
+      } else {
+        path = "/api/issues";
+        method = "POST";
+      }
+      const res = await fetch(path, {
+        method: method,
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
