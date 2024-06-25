@@ -1,7 +1,7 @@
 "use client";
 
-import ErrorMessage from "@/app/components/ErrorMessage";
-import Spinner from "@/app/components/Spinner";
+import ErrorMessage from "@/app/_components/ErrorMessage";
+import Spinner from "@/app/_components/Spinner";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Component1Icon } from "@radix-ui/react-icons";

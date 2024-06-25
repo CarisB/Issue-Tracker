@@ -1,4 +1,4 @@
-import IssueStatusBadge from "@/app/components/IssueStatusBadge";
+import IssueStatusBadge from "@/app/_components/IssueStatusBadge";
 import { $Enums } from "@prisma/client";
 import { Flex, Heading } from "@radix-ui/themes";
 import React from "react";
