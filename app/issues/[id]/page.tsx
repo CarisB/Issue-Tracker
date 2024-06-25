@@ -2,6 +2,7 @@ import prisma from "@/prisma/db";
 import { Box, Grid } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
+import EditStatusButton from "./EditStatusButton";
 import IssueHeading from "./IssueHeading";
 import IssueMdDescription from "./IssueMdDescription";
 import IssueSubheading from "./IssueSubheading";
@@ -34,8 +35,9 @@ async function IssueDetailPage({ params }: Props) {
         <Box>
           <IssueMdDescription description={issue.description} />
         </Box>
-        <Box>
+        <Box className="space-x-3">
           <EditIssueButton issueId={issue.id} />
+          <EditStatusButton />
         </Box>
       </Grid>
     </>
