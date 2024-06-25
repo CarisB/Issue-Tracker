@@ -1,8 +1,10 @@
-import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import prisma from "@/prisma/db";
-import { Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { Box, Grid } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
+import EditIssueButton from "./EditIssueButton";
+import IssueHeading from "./IssueHeading";
+import IssueMdDescription from "./IssueMdDescription";
+import IssueSubheading from "./IssueSubheading";
 
 interface Props {
   params: {
@@ -22,18 +24,21 @@ async function IssueDetailPage({ params }: Props) {
   if (!issue) return notFound();
 
   return (
-    <div>
-      <Flex gap={"3"} align={"center"}>
-        <Heading>{issue.title}</Heading>
-        <IssueStatusBadge status={issue.status} />
-      </Flex>
-      <Text className="italic block my-2">
-        {`Created on: ${issue.createdAt.toLocaleString()}, Last updated on: ${issue.updatedAt.toLocaleString()}`}
-      </Text>
-      <Card mt="5" className="prose dark:prose-invert">
-        <ReactMarkdown>{issue.description}</ReactMarkdown>
-      </Card>
-    </div>
+    <>
+      <IssueHeading title={issue.title} status={issue.status} />
+      <IssueSubheading
+        createdAt={issue.createdAt}
+        updatedAt={issue.updatedAt}
+      />
+      <Grid columns={{ initial: "1", md: "2" }} gap="5" mt="5">
+        <Box>
+          <IssueMdDescription description={issue.description} />
+        </Box>
+        <Box>
+          <EditIssueButton issueId={issue.id} />
+        </Box>
+      </Grid>
+    </>
   );
 }
 
