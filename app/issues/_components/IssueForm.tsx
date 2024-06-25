@@ -4,6 +4,7 @@ import ErrorMessage from "@/app/_components/ErrorMessage";
 import Spinner from "@/app/_components/Spinner";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Issue } from "@prisma/client";
 import { Component1Icon } from "@radix-ui/react-icons";
 import { Button, Callout, TextField } from "@radix-ui/themes";
 import "easymde/dist/easymde.min.css";
@@ -16,7 +17,11 @@ import { z } from "zod";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
-function IssueForm() {
+interface Props {
+  issue?: Issue;
+}
+
+function IssueForm({ issue }: Props) {
   const router = useRouter();
   const {
     register,
@@ -73,11 +78,16 @@ function IssueForm() {
       <form onSubmit={onSubmit} className="space-y-3">
         <h1 className="text-2xl font-bold mb-5">Create a new Issue</h1>
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
-        <TextField.Root {...register("title")} placeholder="Issue title" />
+        <TextField.Root
+          defaultValue={issue?.title}
+          {...register("title")}
+          placeholder="Issue title"
+        />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Controller
           name={"description"}
           control={control}
+          defaultValue={issue?.description}
           render={({ field }) => (
             <SimpleMDE
               placeholder="Description of the Issue"
@@ -92,7 +102,7 @@ function IssueForm() {
           variant="soft"
         >
           <Component1Icon />
-          Create Issue
+          {issue ? "Update Issue" : "Create Issue"}
           {isSubmitting && <Spinner />}
         </Button>
       </form>
