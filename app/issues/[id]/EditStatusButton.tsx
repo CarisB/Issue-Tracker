@@ -1,19 +1,36 @@
-import { DropdownMenuIcon } from "@radix-ui/react-icons";
+import { IssueStatus } from "@prisma/client";
+import { CheckCircledIcon, DropdownMenuIcon } from "@radix-ui/react-icons";
 import { Button, DropdownMenu } from "@radix-ui/themes";
 
-function EditStatusButton() {
+interface Props {
+  selectedStatus: IssueStatus | undefined;
+  onSelect: (status: IssueStatus) => void;
+}
+
+const statusMap: Map<IssueStatus, string> = new Map([
+  [IssueStatus.OPEN, "Open"],
+  [IssueStatus.IN_PROGRESS, "In Progress"],
+  [IssueStatus.CLOSED, "Closed"],
+]);
+
+function EditStatusButton({ selectedStatus, onSelect }: Props) {
+  const color = "indigo";
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button color="indigo">
+        <Button color={color}>
           <DropdownMenuIcon />
           Edit Status
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content color={"indigo"}>
-        <DropdownMenu.Item>Open</DropdownMenu.Item>
-        <DropdownMenu.Item>In Progress</DropdownMenu.Item>
-        <DropdownMenu.Item>Closed</DropdownMenu.Item>
+      <DropdownMenu.Content color={color}>
+        {Array.from(statusMap).map(([status, label]) => (
+          <DropdownMenu.Item key={status} onSelect={() => onSelect(status)}>
+            {label}
+            {status === selectedStatus && <CheckCircledIcon />}
+          </DropdownMenu.Item>
+        ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

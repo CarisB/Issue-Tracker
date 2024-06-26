@@ -1,9 +1,10 @@
 import { IssueStatus } from "@prisma/client";
-import { Badge } from "@radix-ui/themes";
-import React, { PropsWithChildren } from "react";
+import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
+import { Badge, Flex } from "@radix-ui/themes";
 
 interface Props {
   status: IssueStatus;
+  updatedStatus?: IssueStatus;
 }
 
 const statusMap: Record<
@@ -15,9 +16,19 @@ const statusMap: Record<
   CLOSED: { label: "Closed", color: "gray" },
 };
 
-function IssueStatusBadge({ status }: Props) {
+function IssueStatusBadge({ status, updatedStatus }: Props) {
   return (
-    <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
+    <Flex>
+      <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
+      {updatedStatus && (
+        <Flex align={"center"}>
+          <DoubleArrowRightIcon color="teal" />
+          <Badge color={statusMap[updatedStatus].color}>
+            {statusMap[updatedStatus].label}
+          </Badge>
+        </Flex>
+      )}
+    </Flex>
   );
 }
 
