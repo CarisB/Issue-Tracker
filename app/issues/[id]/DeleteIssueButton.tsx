@@ -1,3 +1,4 @@
+import Spinner from "@/app/_components/Spinner";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -9,10 +10,13 @@ interface Props {
 function DeleteIssueButton({ issueId }: Props) {
   const router = useRouter();
 
+  const [isDeleting, setDeleting] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   const handleDelete = async () => {
     try {
+      setDeleting(true);
+
       await fetch(`/api/issues/${issueId}`, {
         method: "DELETE",
         headers: {
@@ -23,6 +27,7 @@ function DeleteIssueButton({ issueId }: Props) {
       router.push("/issues");
       router.refresh();
     } catch (error) {
+      setDeleting(false);
       setHasError(true);
     }
   };
@@ -31,7 +36,10 @@ function DeleteIssueButton({ issueId }: Props) {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red">Delete Issue</Button>
+          <Button disabled={isDeleting} color="red">
+            Delete Issue
+            {isDeleting && <Spinner />}
+          </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content>
           <AlertDialog.Description>
