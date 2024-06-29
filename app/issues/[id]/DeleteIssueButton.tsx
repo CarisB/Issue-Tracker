@@ -42,6 +42,7 @@ function DeleteIssueButton({ issueId }: Props) {
           </Button>
         </AlertDialog.Trigger>
         <AlertDialog.Content>
+          <AlertDialog.Title>Deleting Issue [id#: {issueId}]</AlertDialog.Title>
           <AlertDialog.Description>
             Are you sure you want to delete this issue? This action is
             irreversible.
@@ -62,6 +63,9 @@ function DeleteIssueButton({ issueId }: Props) {
       </AlertDialog.Root>
       <AlertDialog.Root open={hasError}>
         <AlertDialog.Content>
+          <AlertDialog.Title>
+            Error Deleting Issue [id#: {issueId}]
+          </AlertDialog.Title>
           <AlertDialog.Description>
             An unexpected error has occurred. The Issue could not be deleted.
             Please try again later.
