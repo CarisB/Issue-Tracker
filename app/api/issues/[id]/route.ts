@@ -27,3 +27,18 @@ export async function PATCH(
     return NextResponse.json({ error: "Issue not found" }, { status: 404 });
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await prisma.issue.delete({
+      where: { id: parseInt(params.id) },
+    });
+
+    return NextResponse.json({ message: "Issue deleted" });
+  } catch (RecordNotFoundError) {
+    return NextResponse.json({ error: "Issue not found" }, { status: 404 });
+  }
+}
