@@ -52,7 +52,6 @@ function IssueForm({ issue }: Props) {
   }, [selectedStatus]);
 
   const onSubmit = handleSubmit(async (data: IssueForm) => {
-    console.log(selectedStatus, data.status);
     try {
       setSubmitting(true);
 
