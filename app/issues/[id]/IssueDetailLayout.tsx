@@ -4,7 +4,6 @@ import { IssueStatus } from "@prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
 import React from "react";
 import EditIssueButton from "./EditIssueButton";
-import EditStatusButton from "./EditStatusButton";
 import IssueHeading from "./IssueHeading";
 import IssueMdDescription from "./IssueMdDescription";
 import IssueSubheading from "./IssueSubheading";
@@ -42,12 +41,6 @@ function IssueDetailLayout({ issue }: Props) {
         </Box>
         <Box className="space-x-3">
           <EditIssueButton issueId={issue.id} />
-          <EditStatusButton
-            selectedStatus={selectedStatus ? selectedStatus : issue.status}
-            onSelect={(selected) => {
-              setSelectedStatus(selected);
-            }}
-          />
         </Box>
       </Grid>
     </>
