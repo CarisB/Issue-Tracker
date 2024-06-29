@@ -1,17 +1,18 @@
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
-import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   issueId: number;
 }
 
 function EditIssueButton({ issueId }: Props) {
+  const router = useRouter();
+
   return (
-    <Button>
+    <Button onClick={() => router.push(`/issues/${issueId}/edit`)}>
       <Pencil2Icon />
-      <Link href={`/issues/${issueId}/edit`}>Edit Issue</Link>
+      Edit Issue
     </Button>
   );
 }

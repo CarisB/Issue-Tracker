@@ -148,7 +148,6 @@ function IssueForm({ issue }: Props) {
           type="submit"
           disabled={!isValid || isSubmitting}
           variant="soft"
-          className="cursor-pointer"
         >
           <Component1Icon />
           {issue ? "Update Issue" : "Create Issue"}

@@ -19,18 +19,14 @@ function EditStatusButton({ selectedStatus, onSelect }: Props) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button color={color} className="cursor-pointer">
+        <Button color={color}>
           <DropdownMenuIcon />
           Edit Status
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content color={color}>
         {Array.from(statusMap).map(([status, label]) => (
-          <DropdownMenu.Item
-            key={status}
-            onSelect={() => onSelect(status)}
-            className="cursor-pointer"
-          >
+          <DropdownMenu.Item key={status} onSelect={() => onSelect(status)}>
             {label}
             {status === selectedStatus && <CheckCircledIcon />}
           </DropdownMenu.Item>

@@ -7,7 +7,7 @@ function IssuesToolbar() {
   return (
     <div className="mb-5">
       <Link href="/issues/new">
-        <Button variant="soft" className="cursor-pointer">
+        <Button variant="soft">
           <Component1Icon />
           Create Issue
         </Button>
