@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BsBugFill } from "react-icons/bs";
 import DarkModeSwitch from "./DarkModeSwitch";
+import AuthButton from "./issues/_components/AuthButton";
 
 function NavBar() {
   const links = [
@@ -34,6 +35,7 @@ function NavBar() {
           </li>
         ))}
       </ul>
+      <AuthButton />
       <div className="ml-auto">
         <DarkModeSwitch />
       </div>
