@@ -7,6 +7,7 @@ import EditIssueButton from "./EditIssueButton";
 import IssueHeading from "./IssueHeading";
 import IssueMdDescription from "./IssueMdDescription";
 import IssueSubheading from "./IssueSubheading";
+import AssignUserList from "./AssignUserList";
 
 interface Props {
   issue: {
@@ -32,6 +33,7 @@ function IssueDetailLayout({ issue }: Props) {
           <IssueMdDescription description={issue.description} />
         </Box>
         <Box className="space-x-3">
+          <AssignUserList />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
         </Box>
