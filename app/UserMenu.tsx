@@ -1,8 +1,14 @@
 import { Avatar, Box, Button, DropdownMenu, Text } from "@radix-ui/themes";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Spinner from "./_components/Spinner";
 
 function UserMenu() {
   const { status, data: session } = useSession();
+
+  if (status === "loading") return <Spinner />;
+
+  if (status === "unauthenticated")
+    return <Button onClick={() => signIn()}>Login</Button>;
 
   return (
     <Box>
@@ -26,9 +32,6 @@ function UserMenu() {
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-      )}
-      {status === "unauthenticated" && (
-        <Button onClick={() => signIn()}>Login</Button>
       )}
     </Box>
   );
