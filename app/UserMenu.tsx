@@ -23,7 +23,7 @@ function UserMenu() {
               className="cursor-pointer"
             />
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content sideOffset={5} variant="soft">
+          <DropdownMenu.Content align="end" sideOffset={10} variant="soft">
             <DropdownMenu.Label>
               <Text color="cyan">{session.user!.email}</Text>
             </DropdownMenu.Label>
