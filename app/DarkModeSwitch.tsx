@@ -16,10 +16,14 @@ function DarkModeSwitch() {
   if (!isMounted) return null;
 
   return (
-    <Flex align={"center"} gap="3">
-      <BsFillSunFill />
+    <Flex
+      align={"center"}
+      gap="3"
+      className="fixed z-10 p-5 bottom-0 right-0 rounded-tl-xl bg-teal-900"
+    >
+      <BsFillSunFill color="orange" />
       <Switch defaultChecked={isDark} onClick={onToggleTheme} />
-      <BsFillMoonFill />
+      <BsFillMoonFill color="white" />
     </Flex>
   );
 }

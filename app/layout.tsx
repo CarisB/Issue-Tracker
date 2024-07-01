@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
 import "./globals.css";
 import AuthProvider from "./auth/Provider";
+import DarkModeSwitch from "./DarkModeSwitch";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
               <Container>
                 <main className="p-10 xl:px-0">{children}</main>
               </Container>
+              <DarkModeSwitch />
             </Theme>
           </ThemeProvider>
         </AuthProvider>
