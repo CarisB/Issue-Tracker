@@ -1,12 +1,11 @@
 "use client";
 
+import { Container, Flex } from "@radix-ui/themes";
 import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BsBugFill } from "react-icons/bs";
-import DarkModeSwitch from "./DarkModeSwitch";
-import AuthButton from "./issues/_components/AuthButton";
-import { Container, Flex } from "@radix-ui/themes";
+import UserMenu from "./UserMenu";
 
 function NavBar() {
   const links = [
@@ -39,10 +38,9 @@ function NavBar() {
                 </li>
               ))}
             </ul>
-            <AuthButton />
           </Flex>
-          <Flex align="center" className="hidden sm:flex">
-            <DarkModeSwitch />
+          <Flex align="center">
+            <UserMenu />
           </Flex>
         </Flex>
       </Container>
