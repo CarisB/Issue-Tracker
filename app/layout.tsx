@@ -6,6 +6,7 @@ import NavBar from "./NavBar";
 import "./globals.css";
 import AuthProvider from "./auth/Provider";
 import DarkModeSwitch from "./DarkModeSwitch";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,15 +28,17 @@ export default function RootLayout({
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className={inter.className}>
         <AuthProvider>
-          <ThemeProvider attribute="class">
-            <Theme accentColor="cyan">
-              <NavBar />
-              <Container>
-                <main className="p-10 xl:px-0">{children}</main>
-              </Container>
-              <DarkModeSwitch />
-            </Theme>
-          </ThemeProvider>
+          <SessionProvider>
+            <ThemeProvider attribute="class">
+              <Theme accentColor="cyan">
+                <NavBar />
+                <Container>
+                  <main className="p-10 xl:px-0">{children}</main>
+                </Container>
+                <DarkModeSwitch />
+              </Theme>
+            </ThemeProvider>
+          </SessionProvider>
         </AuthProvider>
       </body>
     </html>

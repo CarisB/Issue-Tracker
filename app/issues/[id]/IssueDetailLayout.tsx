@@ -2,12 +2,11 @@
 
 import { IssueStatus } from "@prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
-import React from "react";
+import DeleteIssueButton from "./DeleteIssueButton";
 import EditIssueButton from "./EditIssueButton";
 import IssueHeading from "./IssueHeading";
 import IssueMdDescription from "./IssueMdDescription";
 import IssueSubheading from "./IssueSubheading";
-import DeleteIssueButton from "./DeleteIssueButton";
 
 interface Props {
   issue: {
@@ -21,17 +20,9 @@ interface Props {
 }
 
 function IssueDetailLayout({ issue }: Props) {
-  const [selectedStatus, setSelectedStatus] = React.useState<
-    IssueStatus | undefined
-  >(undefined);
-
   return (
     <>
-      <IssueHeading
-        title={issue.title}
-        status={issue.status}
-        updatedStatus={selectedStatus}
-      />
+      <IssueHeading title={issue.title} status={issue.status} />
       <IssueSubheading
         createdAt={issue.createdAt}
         updatedAt={issue.updatedAt}

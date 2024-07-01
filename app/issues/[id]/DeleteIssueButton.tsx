@@ -1,5 +1,6 @@
 import Spinner from "@/app/_components/Spinner";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 function DeleteIssueButton({ issueId }: Props) {
+  const session = useSession();
+
   const router = useRouter();
 
   const [isDeleting, setDeleting] = useState(false);
@@ -31,6 +34,13 @@ function DeleteIssueButton({ issueId }: Props) {
       setHasError(true);
     }
   };
+
+  if (session.status !== "authenticated")
+    return (
+      <Button onClick={() => router.push("/api/auth/signin")} color="red">
+        Delete Issue
+      </Button>
+    );
 
   return (
     <>
