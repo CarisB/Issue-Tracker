@@ -1,4 +1,4 @@
-import { IssueStatus } from "@prisma/client";
+import { Issue, IssueStatus } from "@prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
 import DeleteIssueButton from "./DeleteIssueButton";
 import EditIssueButton from "./EditIssueButton";
@@ -8,14 +8,7 @@ import IssueSubheading from "./IssueSubheading";
 import AssignUserList from "./AssignUserList";
 
 interface Props {
-  issue: {
-    id: number;
-    title: string;
-    description: string;
-    status: IssueStatus;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  issue: Issue;
 }
 
 function IssueDetailLayout({ issue }: Props) {
@@ -31,7 +24,7 @@ function IssueDetailLayout({ issue }: Props) {
           <IssueMdDescription description={issue.description} />
         </Box>
         <Box className="space-x-3">
-          <AssignUserList />
+          <AssignUserList issue={issue} />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
         </Box>
