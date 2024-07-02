@@ -6,6 +6,7 @@ import { Flex, Select, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import Toast, { toast, Toaster } from "react-hot-toast";
 
 interface Props {
   issue: Issue;
@@ -44,41 +45,54 @@ function AssignUserList({ issue }: Props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ assignedToUserId: val }),
-    });
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to assign user");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        return;
+      });
 
     setSelectedValue(userId);
+    toast.success(
+      `Assigned to ${users?.find((user) => user.id === userId)?.name}`
+    );
   };
 
   return (
-    <Select.Root
-      defaultValue={issue.assignedToUserId || ""}
-      onValueChange={handleValueChange}
-      disabled={session.status !== "authenticated" || isPending || !!error}
-    >
-      <Select.Trigger placeholder="Assign to...">
-        <Flex align="center" gap="2">
-          <PersonIcon />
-          {users?.find((user) => user.id === selectedValue)?.name ||
-            "Assign to..."}
-        </Flex>
-      </Select.Trigger>
-      <Select.Content>
-        <Select.Group>
-          <Select.Item value="null">
-            <Text className="flex items-center gap-2">
-              Unassign
-              <CircleBackslashIcon />
-            </Text>
-          </Select.Item>
-          <Select.Separator />
-          {users?.map((user) => (
-            <Select.Item key={user.id} value={user.id}>
-              {user.name}
+    <>
+      <Select.Root
+        defaultValue={issue.assignedToUserId || ""}
+        onValueChange={handleValueChange}
+        disabled={session.status !== "authenticated" || isPending || !!error}
+      >
+        <Select.Trigger placeholder="Assign to...">
+          <Flex align="center" gap="2">
+            <PersonIcon />
+            {users?.find((user) => user.id === selectedValue)?.name ||
+              "Assign to..."}
+          </Flex>
+        </Select.Trigger>
+        <Select.Content>
+          <Select.Group>
+            <Select.Item value="null">
+              <Text className="flex items-center gap-2">
+                Unassign
+                <CircleBackslashIcon />
+              </Text>
             </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+            <Select.Separator />
+            {users?.map((user) => (
+              <Select.Item key={user.id} value={user.id}>
+                {user.name}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
   );
 }
 
