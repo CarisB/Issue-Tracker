@@ -7,6 +7,7 @@ import "./globals.css";
 import AuthProvider from "./auth/Provider";
 import DarkModeSwitch from "./DarkModeSwitch";
 import { SessionProvider } from "next-auth/react";
+import QueryClientProvider from "./QueryClientProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,15 +30,17 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <SessionProvider>
-            <ThemeProvider attribute="class">
-              <Theme accentColor="cyan">
-                <NavBar />
-                <Container>
-                  <main className="p-10 xl:px-0">{children}</main>
-                </Container>
-                <DarkModeSwitch />
-              </Theme>
-            </ThemeProvider>
+            <QueryClientProvider>
+              <ThemeProvider attribute="class">
+                <Theme accentColor="cyan">
+                  <NavBar />
+                  <Container>
+                    <main className="p-10 xl:px-0">{children}</main>
+                  </Container>
+                  <DarkModeSwitch />
+                </Theme>
+              </ThemeProvider>
+            </QueryClientProvider>
           </SessionProvider>
         </AuthProvider>
       </body>
