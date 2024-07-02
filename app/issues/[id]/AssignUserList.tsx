@@ -6,29 +6,14 @@ import { Flex, Select, Text } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import Toast, { toast, Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 interface Props {
   issue: Issue;
 }
 
 function AssignUserList({ issue }: Props) {
-  const {
-    data: users,
-    error,
-    isPending,
-  } = useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: () =>
-      fetch("/api/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json()),
-    staleTime: 1000 * 60, // 1 minute,
-    retry: 3,
-  });
+  const { data: users, error, isPending } = useUsers();
 
   const session = useSession();
 
@@ -95,5 +80,20 @@ function AssignUserList({ issue }: Props) {
     </>
   );
 }
+
+const useUsers = () => {
+  return useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () =>
+      fetch("/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+    staleTime: 1000 * 60, // 1 minute,
+    retry: 3,
+  });
+};
 
 export default AssignUserList;
