@@ -1,30 +1,39 @@
-import { auth } from "@/auth";
+"use client";
+
 import { User } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
-async function AssignUserList() {
-  let users: User[] = [];
+function AssignUserList() {
+  const {
+    data: users,
+    error,
+    isPending,
+  } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () =>
+      fetch("/api/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+    staleTime: 1000 * 60, // 1 minute,
+    retry: 3,
+  });
 
-  try {
-    users = await fetch(process.env.URL + "/api/users", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
-
-  const session = await auth();
+  const session = useSession();
 
   return (
-    <Select.Root disabled={!session}>
+    <Select.Root
+      disabled={session.status !== "authenticated" || isPending || !!error}
+    >
       <Select.Trigger placeholder="Assign to..." />
       <Select.Content>
         <Select.Group>
           <Select.Label>Suggestions</Select.Label>
-          {users.map((user) => (
+          {users?.map((user) => (
             <Select.Item key={user.id} value={user.id}>
               {user.name}
             </Select.Item>
