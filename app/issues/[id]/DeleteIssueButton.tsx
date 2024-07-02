@@ -1,3 +1,5 @@
+"use client";
+
 import Spinner from "@/app/_components/Spinner";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";

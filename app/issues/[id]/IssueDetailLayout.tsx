@@ -1,5 +1,3 @@
-"use client";
-
 import { IssueStatus } from "@prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
 import DeleteIssueButton from "./DeleteIssueButton";
