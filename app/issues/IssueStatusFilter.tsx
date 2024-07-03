@@ -2,7 +2,7 @@
 
 import { IssueStatus } from "@prisma/client";
 import { Flex, Select } from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { BsFilter } from "react-icons/bs";
 
 function IssueStatusFilter() {
@@ -14,16 +14,28 @@ function IssueStatusFilter() {
   ];
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleValueChange = (status: string) => {
-    const query = status !== "null" ? `?status=${status}` : "";
+    const params = new URLSearchParams();
+    const orderBy = searchParams.get("orderBy");
+    const sort = searchParams.get("sort");
+
+    if (status !== "null") params.append("status", status);
+    if (orderBy) params.append("orderBy", orderBy);
+    if (sort) params.append("sort", sort);
+
+    const query = params.size ? `?${params.toString()}` : "";
     router.push(`/issues${query}`);
   };
 
   return (
     <Flex align="center" gap="1">
       <BsFilter size="20" />
-      <Select.Root onValueChange={handleValueChange}>
+      <Select.Root
+        defaultValue={searchParams.get("status") || ""}
+        onValueChange={handleValueChange}
+      >
         <Select.Trigger placeholder="Filter by Status" />
         <Select.Content>
           {statuses.map((status) => (
