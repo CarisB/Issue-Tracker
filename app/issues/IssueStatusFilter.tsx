@@ -1,5 +1,6 @@
 "use client";
 
+import SearchParamsList from "@/app/issues/searchParamsList";
 import { IssueStatus } from "@prisma/client";
 import { Flex, Select } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -18,12 +19,14 @@ function IssueStatusFilter() {
 
   const handleValueChange = (status: string) => {
     const params = new URLSearchParams();
-    const orderBy = searchParams.get("orderBy");
-    const sort = searchParams.get("sort");
-
     if (status !== "null") params.append("status", status);
-    if (orderBy) params.append("orderBy", orderBy);
-    if (sort) params.append("sort", sort);
+
+    SearchParamsList.forEach((param) => {
+      if (param === "status" || param === "page") return;
+
+      const val = searchParams.get(param);
+      if (val) params.append(param, val);
+    });
 
     const query = params.size ? `?${params.toString()}` : "";
     router.push(`/issues${query}`);

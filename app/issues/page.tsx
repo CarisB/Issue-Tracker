@@ -134,6 +134,7 @@ async function IssuesPage({ searchParams }: Props) {
           pageSize={pageSize}
           currentPage={page}
         />
+        <div />
         <PageSizeSelect pageSize={pageSize} />
       </Flex>
     </div>

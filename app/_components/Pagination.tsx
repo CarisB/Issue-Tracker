@@ -1,5 +1,6 @@
 "use client";
 
+import SearchParamsList from "@/app/issues/searchParamsList";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -20,17 +21,17 @@ function Pagination({ itemCount, pageSize, currentPage }: Props) {
   const searchParams = useSearchParams();
 
   const params = new URLSearchParams();
-  const status = searchParams.get("status");
-  const orderBy = searchParams.get("orderBy");
-  const sort = searchParams.get("sort");
 
   const pageCount = Math.ceil(itemCount / pageSize);
   if (pageCount <= 1) return null;
 
   const handlePageChange = (page: number) => {
-    if (status) params.append("status", status);
-    if (orderBy) params.append("orderBy", orderBy);
-    if (sort) params.append("sort", sort);
+    SearchParamsList.forEach((param) => {
+      if (param === "page") return;
+
+      const val = searchParams.get(param);
+      if (val) params.append(param, val);
+    });
 
     params.append("page", page.toString());
     router.push(`?${params.toString()}`);
