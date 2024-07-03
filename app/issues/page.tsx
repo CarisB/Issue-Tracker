@@ -13,6 +13,7 @@ interface Props {
     status?: IssueStatus;
     orderBy?: keyof Issue;
     sort?: "asc" | "desc";
+    page?: string;
   };
 }
 
@@ -57,13 +58,19 @@ async function IssuesPage({ searchParams }: Props) {
     : undefined;
 
   // Fetch Issues from the database
+  let page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const pageSize = 5; // TO-DO: Replace with DropdownMenu UI
+  const where = { status: status };
+  const issueCount = await prisma.issue.count({ where });
+  const pageCount = Math.ceil(issueCount / pageSize);
+  page = page > pageCount ? pageCount : page;
   const issues = await prisma.issue.findMany({
-    where: {
-      status: status,
-    },
+    where,
     orderBy: {
       [orderBy || "id"]: sort || "asc",
     },
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
 
   return (
@@ -120,7 +127,11 @@ async function IssuesPage({ searchParams }: Props) {
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination itemCount={issues.length} pageSize={5} currentPage={1} />
+      <Pagination
+        itemCount={issueCount}
+        pageSize={pageSize}
+        currentPage={page}
+      />
     </div>
   );
 }
