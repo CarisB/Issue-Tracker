@@ -1,12 +1,13 @@
 import prisma from "@/prisma/db";
 import { Issue, IssueStatus } from "@prisma/client";
-import { Table } from "@radix-ui/themes";
+import { Flex, Table } from "@radix-ui/themes";
 import NextLink from "next/link";
 import IssueStatusBadge from "../_components/IssueStatusBadge";
 import Link from "../_components/Link";
 import IssuesToolbar from "./IssuesToolbar";
 import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
 import Pagination from "../_components/Pagination";
+import PageSizeSelect from "../_components/PageSizeSelect";
 
 interface Props {
   searchParams: {
@@ -76,7 +77,7 @@ async function IssuesPage({ searchParams }: Props) {
   return (
     <div>
       <IssuesToolbar />
-      <Table.Root variant="surface" mb="5">
+      <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
             {orderByList.map((orderBy) => (
@@ -127,15 +128,17 @@ async function IssuesPage({ searchParams }: Props) {
           ))}
         </Table.Body>
       </Table.Root>
-      <Pagination
-        itemCount={issueCount}
-        pageSize={pageSize}
-        currentPage={page}
-      />
+      <Flex align="center" justify="between" mt="5">
+        <Pagination
+          itemCount={issueCount}
+          pageSize={pageSize}
+          currentPage={page}
+        />
+        <PageSizeSelect pageSize={pageSize} />
+      </Flex>
     </div>
   );
 }
-
 // This page must be dynamically rendered to disable cache
 export const dynamic = "force-dynamic";
 export default IssuesPage;
