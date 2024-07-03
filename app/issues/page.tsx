@@ -6,6 +6,7 @@ import IssueStatusBadge from "../_components/IssueStatusBadge";
 import Link from "../_components/Link";
 import IssuesToolbar from "./IssuesToolbar";
 import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
+import Pagination from "../_components/Pagination";
 
 interface Props {
   searchParams: {
@@ -68,7 +69,7 @@ async function IssuesPage({ searchParams }: Props) {
   return (
     <div>
       <IssuesToolbar />
-      <Table.Root variant="surface">
+      <Table.Root variant="surface" mb="5">
         <Table.Header>
           <Table.Row>
             {orderByList.map((orderBy) => (
@@ -119,6 +120,7 @@ async function IssuesPage({ searchParams }: Props) {
           ))}
         </Table.Body>
       </Table.Root>
+      <Pagination itemCount={issues.length} pageSize={5} currentPage={1} />
     </div>
   );
 }
