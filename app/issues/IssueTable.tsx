@@ -49,7 +49,10 @@ function IssueTable({ issues, searchParams }: Props) {
       </Table.Header>
       <Table.Body>
         {issues.map((issue) => (
-          <Table.Row key={issue.id}>
+          <Table.Row
+            key={issue.id}
+            className="transition hover:bg-blue-50 dark:hover:bg-gray-800"
+          >
             <Table.Cell>
               <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
             </Table.Cell>

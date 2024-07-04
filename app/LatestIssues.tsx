@@ -22,19 +22,25 @@ async function LatestIssues() {
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-                <Flex justify="between">
-                  <Flex direction="column" gap="3">
-                    <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-                    <IssueStatusBadge status={issue.status} />
+                <Link href={`/issues/${issue.id}`}>
+                  <Flex
+                    justify="between"
+                    className="transition ease-in-out hover:translate-x-2"
+                  >
+                    <Flex direction="column" gap="3">
+                      {issue.title}
+                      <IssueStatusBadge status={issue.status} />
+                    </Flex>
+
+                    {issue.assignedToUser && (
+                      <Avatar
+                        src={issue.assignedToUser.image!}
+                        fallback="?"
+                        alt={issue.assignedToUser.name!}
+                      />
+                    )}
                   </Flex>
-                  {issue.assignedToUser && (
-                    <Avatar
-                      src={issue.assignedToUser.image!}
-                      fallback="?"
-                      alt={issue.assignedToUser.name!}
-                    />
-                  )}
-                </Flex>
+                </Link>
               </Table.Cell>
             </Table.Row>
           ))}

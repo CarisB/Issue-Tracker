@@ -14,7 +14,10 @@ export default function NavBar() {
         <Flex justify="between">
           <Flex gap="5" align="center">
             <Link href="/">
-              <BsBugFill size={30} />
+              <BsBugFill
+                size={30}
+                className="transition ease-in-out hover:scale-110"
+              />
             </Link>
             <NavMenu />
           </Flex>

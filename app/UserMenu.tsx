@@ -20,7 +20,7 @@ function UserMenu() {
               alt={session!.user!.name!}
               fallback="?"
               radius="full"
-              className="cursor-pointer"
+              className="cursor-pointer transition ease-in-out hover:scale-110"
             />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end" sideOffset={10} variant="soft">

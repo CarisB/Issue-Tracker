@@ -8,7 +8,7 @@ interface Props {
 
 function IssueMdDescription({ description }: Props) {
   return (
-    <Card className="prose dark:prose-invert">
+    <Card className="prose dark:prose-invert p-5">
       <ReactMarkdown>{description}</ReactMarkdown>
     </Card>
   );
