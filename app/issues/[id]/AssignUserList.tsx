@@ -21,10 +21,10 @@ function AssignUserList({ issue }: Props) {
     issue.assignedToUserId || ""
   );
 
-  const handleValueChange = (userId: string) => {
+  const handleValueChange = async (userId: string) => {
     const val = userId === "null" ? null : userId;
 
-    fetch(`/api/issues/${issue.id}`, {
+    await fetch(`/api/issues/${issue.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,9 @@ function AssignUserList({ issue }: Props) {
 
     setSelectedValue(userId);
     toast.success(
-      `Assigned to ${users?.find((user) => user.id === userId)?.name}`
+      userId !== "null"
+        ? `Assigned to ${users?.find((user) => user.id === userId)?.name}`
+        : "Successfully unassigned user"
     );
   };
 
