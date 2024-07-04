@@ -1,8 +1,9 @@
-import { Flex } from "@radix-ui/themes";
-import IssueOverview from "./IssueOverview";
-import LatestIssues from "./LatestIssues";
 import prisma from "@/prisma/db";
 import { IssueStatus } from "@prisma/client";
+import { Flex, Grid } from "@radix-ui/themes";
+import IssueChart from "./IssueChart";
+import IssueOverview from "./IssueOverview";
+import LatestIssues from "./LatestIssues";
 
 export default async function Home() {
   const issueCount = {
@@ -18,9 +19,12 @@ export default async function Home() {
   };
 
   return (
-    <Flex direction="column" gap="2">
+    <Grid columns={{ initial: "1", md: "2" }} gap="5">
+      <Flex direction="column" gap="5" align="end">
+        <IssueOverview issueCount={issueCount} />
+        <IssueChart issueCount={issueCount} />
+      </Flex>
       <LatestIssues />
-      <IssueOverview issueCount={issueCount} />
-    </Flex>
+    </Grid>
   );
 }
