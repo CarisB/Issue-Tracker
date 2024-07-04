@@ -56,10 +56,10 @@ async function IssuesPage({ searchParams }: Props) {
   });
 
   return (
-    <div>
+    <Flex direction="column" gap="5">
       <IssuesToolbar />
       <IssueTable issues={issues} searchParams={searchParams} />
-      <Flex align="center" justify="between" mt="5">
+      <Flex align="center" justify="between">
         <Pagination
           itemCount={issueCount}
           pageSize={pageSize}
@@ -69,7 +69,7 @@ async function IssuesPage({ searchParams }: Props) {
         <div />
         <PageSizeSelect pageSize={pageSize} pageSizeOptions={pageSizeOptions} />
       </Flex>
-    </div>
+    </Flex>
   );
 }
 

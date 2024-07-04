@@ -6,7 +6,7 @@ import IssueStatusFilter from "./IssueStatusFilter";
 
 function IssuesToolbar() {
   return (
-    <Flex justify={"between"} className="mb-5">
+    <Flex justify={"between"}>
       <Link href="/issues/new">
         <Button variant="soft">
           <Component1Icon />
