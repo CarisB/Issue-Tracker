@@ -1,44 +1,16 @@
 import prisma from "@/prisma/db";
-import { Issue, IssueStatus } from "@prisma/client";
-import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
-import { Flex, Table } from "@radix-ui/themes";
-import NextLink from "next/link";
-import IssueStatusBadge from "../_components/IssueStatusBadge";
-import Link from "../_components/Link";
+import { IssueStatus } from "@prisma/client";
+import { Flex } from "@radix-ui/themes";
 import PageSizeSelect from "../_components/PageSizeSelect";
 import Pagination from "../_components/Pagination";
 import IssuesToolbar from "./IssuesToolbar";
+import IssueTable, { IssueQueryParams, orderByValues } from "./IssueTable";
 
 interface Props {
-  searchParams: {
-    status?: IssueStatus;
-    orderBy?: keyof Issue;
-    sort?: "asc" | "desc";
-    page?: string;
-    pageSize?: string;
-  };
+  searchParams: IssueQueryParams;
 }
 
-const pageSizeOptions = [5, 10, 15, 20, 25];
-
-const hiddenClassName = "hidden md:table-cell";
-
 async function IssuesPage({ searchParams }: Props) {
-  // Define the columns to order by
-  const orderByList: {
-    label: string;
-    value: keyof Issue;
-    className?: string;
-  }[] = [
-    { label: "Title", value: "title" },
-    { label: "Status", value: "status" },
-    {
-      label: "Created On",
-      value: "createdAt",
-      className: hiddenClassName,
-    },
-  ];
-
   // Validate the status query parameter
   const statusList = Object.values(IssueStatus);
   const status = searchParams.status
@@ -49,7 +21,7 @@ async function IssuesPage({ searchParams }: Props) {
 
   // Validate the orderBy query parameter
   const orderBy = searchParams.orderBy
-    ? orderByList.map((orderBy) => orderBy.value).includes(searchParams.orderBy)
+    ? orderByValues.includes(searchParams.orderBy)
       ? searchParams.orderBy
       : undefined
     : undefined;
@@ -86,69 +58,23 @@ async function IssuesPage({ searchParams }: Props) {
   return (
     <div>
       <IssuesToolbar />
-      <Table.Root variant="surface">
-        <Table.Header>
-          <Table.Row>
-            {orderByList.map((orderBy) => (
-              <Table.ColumnHeaderCell
-                key={orderBy.value}
-                className={orderBy.className}
-              >
-                <NextLink
-                  href={
-                    // Update the query parameters
-                    {
-                      query: {
-                        ...searchParams,
-                        orderBy: orderBy.value,
-                        sort:
-                          searchParams.orderBy === orderBy.value &&
-                          searchParams.sort === "asc"
-                            ? "desc"
-                            : "asc",
-                      },
-                    }
-                  }
-                  className="flex items-center gap-1"
-                >
-                  {orderBy.label}
-                  {searchParams.orderBy === orderBy.value &&
-                    searchParams.sort === "asc" && <TriangleUpIcon />}
-                  {searchParams.orderBy === orderBy.value &&
-                    searchParams.sort === "desc" && <TriangleDownIcon />}
-                </NextLink>
-              </Table.ColumnHeaderCell>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {issues.map((issue) => (
-            <Table.Row key={issue.id}>
-              <Table.Cell>
-                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-              </Table.Cell>
-              <Table.Cell>
-                <IssueStatusBadge status={issue.status} />
-              </Table.Cell>
-              <Table.Cell className={hiddenClassName}>
-                {issue.createdAt.toLocaleString()}
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table.Root>
+      <IssueTable issues={issues} searchParams={searchParams} />
       <Flex align="center" justify="between" mt="5">
         <Pagination
           itemCount={issueCount}
           pageSize={pageSize}
           currentPage={page}
         />
+        {/* Empty spacer */}
         <div />
         <PageSizeSelect pageSize={pageSize} pageSizeOptions={pageSizeOptions} />
       </Flex>
     </div>
   );
 }
+
+const pageSizeOptions = [5, 10, 15, 20, 25];
+
 // This page must be dynamically rendered to disable cache
 export const dynamic = "force-dynamic";
 export default IssuesPage;
