@@ -1,13 +1,13 @@
 import prisma from "@/prisma/db";
 import { Issue, IssueStatus } from "@prisma/client";
+import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
 import { Flex, Table } from "@radix-ui/themes";
 import NextLink from "next/link";
 import IssueStatusBadge from "../_components/IssueStatusBadge";
 import Link from "../_components/Link";
-import IssuesToolbar from "./IssuesToolbar";
-import { TriangleDownIcon, TriangleUpIcon } from "@radix-ui/react-icons";
-import Pagination from "../_components/Pagination";
 import PageSizeSelect from "../_components/PageSizeSelect";
+import Pagination from "../_components/Pagination";
+import IssuesToolbar from "./IssuesToolbar";
 
 interface Props {
   searchParams: {
@@ -15,8 +15,11 @@ interface Props {
     orderBy?: keyof Issue;
     sort?: "asc" | "desc";
     page?: string;
+    pageSize?: string;
   };
 }
+
+const pageSizeOptions = [5, 10, 15, 20, 25];
 
 const hiddenClassName = "hidden md:table-cell";
 
@@ -58,9 +61,15 @@ async function IssuesPage({ searchParams }: Props) {
       : undefined
     : undefined;
 
+  // Validate the pageSize query parameter
+  const pageSize = searchParams.pageSize
+    ? parseInt(searchParams.pageSize) > 0
+      ? parseInt(searchParams.pageSize)
+      : pageSizeOptions[0]
+    : pageSizeOptions[0];
+
   // Fetch Issues from the database
   let page = searchParams.page ? parseInt(searchParams.page) : 1;
-  const pageSize = 5; // TO-DO: Replace with DropdownMenu UI
   const where = { status: status };
   const issueCount = await prisma.issue.count({ where });
   const pageCount = Math.ceil(issueCount / pageSize);
@@ -135,7 +144,7 @@ async function IssuesPage({ searchParams }: Props) {
           currentPage={page}
         />
         <div />
-        <PageSizeSelect pageSize={pageSize} />
+        <PageSizeSelect pageSize={pageSize} pageSizeOptions={pageSizeOptions} />
       </Flex>
     </div>
   );

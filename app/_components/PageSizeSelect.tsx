@@ -1,16 +1,16 @@
 "use client";
 
+import SearchParamsList from "@/app/issues/searchParamsList";
 import { Select } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
   pageSize: number;
+  pageSizeOptions: number[];
 }
 
-const pageSizeOptions = [5, 10, 15, 20, 25];
-
-function PageSizeSelect({ pageSize }: Props) {
+function PageSizeSelect({ pageSize, pageSizeOptions }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams();
@@ -19,6 +19,17 @@ function PageSizeSelect({ pageSize }: Props) {
 
   const handleValueChange = (value: string) => {
     setSize(parseInt(value));
+
+    SearchParamsList.forEach((param) => {
+      if (param === "pageSize" || param === "page") return;
+
+      const val = searchParams.get(param);
+      if (val) params.append(param, val);
+    });
+
+    if (parseInt(value) !== pageSizeOptions[0])
+      params.append("pageSize", value);
+    router.push(`?${params.toString()}`);
   };
 
   return (
