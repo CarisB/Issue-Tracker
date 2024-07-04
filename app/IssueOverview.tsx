@@ -1,27 +1,24 @@
-import prisma from "@/prisma/db";
 import { IssueStatus } from "@prisma/client";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import Link from "next/link";
 
-async function IssueOverview() {
-  const open = await prisma.issue.count({
-    where: { status: IssueStatus.OPEN },
-  });
-  const inProgress = await prisma.issue.count({
-    where: { status: IssueStatus.IN_PROGRESS },
-  });
-  const closed = await prisma.issue.count({
-    where: { status: IssueStatus.CLOSED },
-  });
+interface Props {
+  issueCount: {
+    open: number;
+    inProgress: number;
+    closed: number;
+  };
+}
 
+function IssueOverview({ issueCount }: Props) {
   const containers = [
-    { label: "Open", status: IssueStatus.OPEN, count: open },
+    { label: "Open", status: IssueStatus.OPEN, count: issueCount.open },
     {
       label: "In Progress",
       status: IssueStatus.IN_PROGRESS,
-      count: inProgress,
+      count: issueCount.inProgress,
     },
-    { label: "Closed", status: IssueStatus.CLOSED, count: closed },
+    { label: "Closed", status: IssueStatus.CLOSED, count: issueCount.closed },
   ];
 
   return (
