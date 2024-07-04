@@ -5,6 +5,7 @@ import PageSizeSelect from "../_components/PageSizeSelect";
 import Pagination from "../_components/Pagination";
 import IssuesToolbar from "./IssuesToolbar";
 import IssueTable, { IssueQueryParams, orderByValues } from "./IssueTable";
+import { Metadata } from "next";
 
 interface Props {
   searchParams: IssueQueryParams;
@@ -74,6 +75,11 @@ async function IssuesPage({ searchParams }: Props) {
 }
 
 const pageSizeOptions = [5, 10, 15, 20, 25];
+
+export const metadata: Metadata = {
+  title: "Issue Tracker | Issues",
+  description: "View and manage all project issues",
+};
 
 // This page must be dynamically rendered to disable cache
 export const dynamic = "force-dynamic";
