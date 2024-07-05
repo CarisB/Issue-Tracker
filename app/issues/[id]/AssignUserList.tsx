@@ -92,6 +92,7 @@ const useUsers = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        cache: "no-store",
       }).then((res) => res.json()),
     staleTime: 1000 * 60, // 1 minute,
     retry: 3,
