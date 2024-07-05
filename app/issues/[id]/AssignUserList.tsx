@@ -86,8 +86,8 @@ function AssignUserList({ issue }: Props) {
 const useUsers = () => {
   return useQuery<User[]>({
     queryKey: ["users"],
-    queryFn: () =>
-      fetch("/api/users", {
+    queryFn: async () =>
+      await fetch("/api/users", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
