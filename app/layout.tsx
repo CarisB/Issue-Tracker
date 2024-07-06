@@ -1,12 +1,13 @@
-import { Container, Theme, ThemePanel } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
-import NavBar from "./NavBar";
-import "./globals.css";
 import AuthProvider from "./auth/Provider";
 import DarkModeSwitch from "./DarkModeSwitch";
-import { SessionProvider } from "next-auth/react";
+import "./globals.css";
+import NavBar from "./NavBar";
 import QueryClientProvider from "./QueryClientProvider";
 
 const inter = Inter({
@@ -43,6 +44,7 @@ export default function RootLayout({
             </QueryClientProvider>
           </SessionProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
