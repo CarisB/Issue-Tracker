@@ -12,7 +12,7 @@ interface Props {
 
 function IssueTable({ issues, searchParams }: Props) {
   return (
-    <Table.Root variant="surface">
+    <Table.Root variant="surface" className="shadow-lg">
       <Table.Header>
         <Table.Row>
           {orderByList.map((orderBy) => (

@@ -1,6 +1,13 @@
 "use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  LabelList,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 interface Props {
   issueCount: {
@@ -19,10 +26,22 @@ function IssueChart({ issueCount }: Props) {
 
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
-        <XAxis dataKey="label" />
-        <YAxis />
-        <Bar dataKey="value" barSize="80" style={{ fill: "var(--accent-9)" }} />
+      <BarChart data={data} margin={{ top: 25 }}>
+        <XAxis dataKey="label" stroke="#2b7a78" />
+
+        <Bar
+          dataKey="value"
+          barSize="80"
+          fill="var(--bar-fill)"
+          className="drop-shadow-md"
+        >
+          <LabelList
+            dataKey="value"
+            position="top"
+            offset={10}
+            stroke="var(--bar-fill)"
+          />
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );

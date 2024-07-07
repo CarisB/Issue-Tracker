@@ -1,8 +1,8 @@
+@import "@radix-ui/themes/styles.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "@radix-ui/themes/styles.css";
 .radix-themes {
   --default-font-family: var(--font-inter);
   --cursor-button: pointer;
@@ -14,23 +14,29 @@
   --cursor-slider-thumb: grab;
   --cursor-slider-thumb-active: grabbing;
   --cursor-switch: pointer;
+
+  transition: all 0.2s ease-in-out;
 }
 
-:root {
-  --foreground: #222;
-  --background: #fff;
+:is(.light, .light-theme),
+:is(.light, .light-theme) :where(.radix-themes:not(.dark, .dark-theme)) {
+  --color-background: #def2f1;
+  --nav-bg: #3aafa9;
+  --nav-links-bg: #2b7a78;
+  --nav-links-bg: linear-gradient(to bottom, #2b7a78 0%, transparent 100%);
+  --switch-bg: #3aafa9;
+  --bar-fill: #3aafa9;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #fff;
-    --background: #121212;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background-color: var(--background);
+:is(.dark, .dark-theme),
+:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
+  --color-background: #17252a;
+  --nav-bg: #2b7a78;
+  --nav-bg: linear-gradient(to bottom, #2b7a78 0%, transparent 100%);
+  --nav-links-bg: #3aafa9;
+  --nav-links-bg: linear-gradient(to bottom, #3aafa9 0%, transparent 120%);
+  --switch-bg: #2b7a78;
+  --bar-fill: #def2f1;
 }
 
 @layer utilities {

@@ -28,7 +28,7 @@ function IssueOverview({ issueCount }: Props) {
           key={container.status}
           href={`/issues?status=${container.status}`}
         >
-          <Card className="p-5 transition ease-in-out hover:scale-110">
+          <Card className="p-5 transition ease-in-out hover:scale-110 hover:shadow-md">
             <Flex direction="column" gap="2">
               <Heading size="2" weight="light" align="right">
                 {container.label}

@@ -38,7 +38,7 @@ function Pagination({ itemCount, pageSize, currentPage }: Props) {
   };
 
   return (
-    <Flex gap="2">
+    <Flex align="center" gap="2">
       <Text mr="3">
         Page {currentPage} of {pageCount}
       </Text>

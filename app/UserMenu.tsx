@@ -8,7 +8,11 @@ function UserMenu() {
   if (status === "loading") return <Spinner />;
 
   if (status === "unauthenticated")
-    return <Button onClick={() => signIn()}>Login</Button>;
+    return (
+      <Button onClick={() => signIn()} color="red">
+        Login
+      </Button>
+    );
 
   return (
     <Box>
@@ -20,7 +24,7 @@ function UserMenu() {
               alt={session!.user!.name!}
               fallback="?"
               radius="full"
-              className="cursor-pointer transition ease-in-out hover:scale-110"
+              className="mr-4 cursor-pointer outline-double outline-8 outline-offset-4 outline-pink-300 drop-shadow-lg transition ease-in-out hover:scale-110"
             />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end" sideOffset={10} variant="soft">

@@ -1,4 +1,4 @@
-import { Container, Theme } from "@radix-ui/themes";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
@@ -38,7 +38,9 @@ export default function RootLayout({
                   <Container>
                     <main className="p-10 xl:px-0">{children}</main>
                   </Container>
-                  <DarkModeSwitch />
+                  <Theme accentColor="amber">
+                    <DarkModeSwitch />
+                  </Theme>
                 </Theme>
               </ThemeProvider>
             </QueryClientProvider>

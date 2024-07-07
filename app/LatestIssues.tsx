@@ -13,7 +13,7 @@ async function LatestIssues() {
   });
 
   return (
-    <Card className="p-5">
+    <Card className="p-5 shadow-lg">
       <Heading size="5" mb="2">
         Latest Issues
       </Heading>
