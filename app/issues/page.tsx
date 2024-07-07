@@ -1,6 +1,6 @@
 import prisma from "@/prisma/db";
 import { IssueStatus } from "@prisma/client";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Grid } from "@radix-ui/themes";
 import PageSizeSelect from "../_components/PageSizeSelect";
 import Pagination from "../_components/Pagination";
 import IssuesToolbar from "./IssuesToolbar";
@@ -60,16 +60,22 @@ async function IssuesPage({ searchParams }: Props) {
     <Flex direction="column" gap="5">
       <IssuesToolbar />
       <IssueTable issues={issues} searchParams={searchParams} />
-      <Flex align="center" justify="between">
-        <Pagination
-          itemCount={issueCount}
-          pageSize={pageSize}
-          currentPage={page}
-        />
-        {/* Empty spacer */}
-        <div />
+      <Grid
+        columns={{ initial: "1", sm: "2" }}
+        gap="3"
+        justify="between"
+        align="center"
+        className="md:justify-items-end"
+      >
+        <div className="w-fit justify-self-start">
+          <Pagination
+            itemCount={issueCount}
+            pageSize={pageSize}
+            currentPage={page}
+          />
+        </div>
         <PageSizeSelect pageSize={pageSize} pageSizeOptions={pageSizeOptions} />
-      </Flex>
+      </Grid>
     </Flex>
   );
 }

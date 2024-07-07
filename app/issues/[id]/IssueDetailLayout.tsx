@@ -1,11 +1,11 @@
-import { Issue, IssueStatus } from "@prisma/client";
-import { Box, Grid } from "@radix-ui/themes";
+import { Issue } from "@prisma/client";
+import { Box, Flex, Grid } from "@radix-ui/themes";
+import AssignUserList from "./AssignUserList";
 import DeleteIssueButton from "./DeleteIssueButton";
 import EditIssueButton from "./EditIssueButton";
 import IssueHeading from "./IssueHeading";
 import IssueMdDescription from "./IssueMdDescription";
 import IssueSubheading from "./IssueSubheading";
-import AssignUserList from "./AssignUserList";
 
 interface Props {
   issue: Issue;
@@ -23,11 +23,11 @@ function IssueDetailLayout({ issue }: Props) {
         <Box>
           <IssueMdDescription description={issue.description} />
         </Box>
-        <Box className="space-x-3">
+        <Flex gap="3" className="flex-col sm:flex-row w-fit">
           <AssignUserList issue={issue} />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
-        </Box>
+        </Flex>
       </Grid>
     </>
   );

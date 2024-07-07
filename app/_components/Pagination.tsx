@@ -7,7 +7,7 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
-import { Button, Flex, Text } from "@radix-ui/themes";
+import { Button, Flex, Grid, Text } from "@radix-ui/themes";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
@@ -38,42 +38,44 @@ function Pagination({ itemCount, pageSize, currentPage }: Props) {
   };
 
   return (
-    <Flex align="center" gap="1">
+    <Flex gap="2">
       <Text mr="3">
         Page {currentPage} of {pageCount}
       </Text>
-      <Button
-        onClick={() => handlePageChange(1)}
-        color="gray"
-        variant="soft"
-        disabled={currentPage === 1}
-      >
-        <DoubleArrowLeftIcon />
-      </Button>
-      <Button
-        onClick={() => handlePageChange(currentPage - 1)}
-        color="gray"
-        variant="soft"
-        disabled={currentPage === 1}
-      >
-        <ChevronLeftIcon />
-      </Button>
-      <Button
-        onClick={() => handlePageChange(currentPage + 1)}
-        color="gray"
-        variant="soft"
-        disabled={currentPage === pageCount}
-      >
-        <ChevronRightIcon />
-      </Button>
-      <Button
-        onClick={() => handlePageChange(pageCount)}
-        color="gray"
-        variant="soft"
-        disabled={currentPage === pageCount}
-      >
-        <DoubleArrowRightIcon />
-      </Button>
+      <Flex align="center" gap="1">
+        <Button
+          onClick={() => handlePageChange(1)}
+          color="gray"
+          variant="soft"
+          disabled={currentPage === 1}
+        >
+          <DoubleArrowLeftIcon />
+        </Button>
+        <Button
+          onClick={() => handlePageChange(currentPage - 1)}
+          color="gray"
+          variant="soft"
+          disabled={currentPage === 1}
+        >
+          <ChevronLeftIcon />
+        </Button>
+        <Button
+          onClick={() => handlePageChange(currentPage + 1)}
+          color="gray"
+          variant="soft"
+          disabled={currentPage === pageCount}
+        >
+          <ChevronRightIcon />
+        </Button>
+        <Button
+          onClick={() => handlePageChange(pageCount)}
+          color="gray"
+          variant="soft"
+          disabled={currentPage === pageCount}
+        >
+          <DoubleArrowRightIcon />
+        </Button>
+      </Flex>
     </Flex>
   );
 }
