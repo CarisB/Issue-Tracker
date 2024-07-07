@@ -32,7 +32,7 @@ export default function RootLayout({
         <AuthProvider>
           <SessionProvider>
             <QueryClientProvider>
-              <ThemeProvider attribute="class">
+              <ThemeProvider attribute="class" enableSystem={false}>
                 <Theme accentColor="cyan">
                   <NavBar />
                   <Container>
