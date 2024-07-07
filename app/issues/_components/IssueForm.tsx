@@ -89,7 +89,7 @@ function IssueForm({ issue }: Props) {
   });
 
   return (
-    <div className="w-2/3">
+    <>
       {error && (
         <Callout.Root color={"red"} className="mb-5">
           <Callout.Icon>
@@ -153,7 +153,7 @@ function IssueForm({ issue }: Props) {
           {isSubmitting && <Spinner />}
         </Button>
       </form>
-    </div>
+    </>
   );
 }
 
