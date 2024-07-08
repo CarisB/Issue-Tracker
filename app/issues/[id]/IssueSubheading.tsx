@@ -1,4 +1,4 @@
-import { Text } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 
 interface Props {
   createdAt: Date;
@@ -7,9 +7,10 @@ interface Props {
 
 function IssueSubheading({ createdAt, updatedAt }: Props) {
   return (
-    <Text className="italic block my-2">
-      {`Created on: ${createdAt.toLocaleString()}, Last updated on: ${updatedAt.toLocaleString()}`}
-    </Text>
+    <Flex direction="column" mt="1" className="italic">
+      <Text size="2">{`Created on: ${createdAt.toLocaleString()}`}</Text>
+      <Text size="2">{`Last updated: ${updatedAt.toLocaleString()}`}</Text>
+    </Flex>
   );
 }
 

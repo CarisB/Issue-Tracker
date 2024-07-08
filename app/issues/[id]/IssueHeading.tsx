@@ -11,7 +11,7 @@ interface Props {
 function IssueHeading({ title, status, updatedStatus }: Props) {
   return (
     <Flex gap={"3"} align={"center"}>
-      <Heading>{title}</Heading>
+      <Heading color="sky">{title}</Heading>
       <IssueStatusBadge
         status={status}
         updatedStatus={updatedStatus !== status ? updatedStatus : undefined}

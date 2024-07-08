@@ -19,11 +19,11 @@ function IssueDetailLayout({ issue }: Props) {
         createdAt={issue.createdAt}
         updatedAt={issue.updatedAt}
       />
-      <Grid columns={{ initial: "1", md: "2" }} gap="5" mt="5">
+      <Grid columns={{ initial: "1", md: "2" }} gap="5" mt="4">
         <Box>
           <IssueMdDescription description={issue.description} />
         </Box>
-        <Flex gap="3" className="flex-col sm:flex-row w-fit">
+        <Flex gap="3" className="flex-col sm:flex-row">
           <AssignUserList issue={issue} />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
